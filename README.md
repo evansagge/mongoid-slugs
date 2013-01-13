@@ -1,6 +1,6 @@
 # Mongoid::Slugs
 
-TODO: Write a gem description
+Simple slugging for Mongoid models
 
 ## Installation
 
@@ -16,9 +16,30 @@ Or install it yourself as:
 
     $ gem install mongoid-slugs
 
-## Usage
+## Example Usage
 
-TODO: Write usage instructions here
+```ruby
+class Article
+  include Mongoid::Document
+  include Mongoid::Slugs
+
+  field :title
+  field :content
+
+  slug_on :title
+end
+```
+
+```ruby
+article1 = Article.create(title: "This is a Test Article", content: "...")
+article1.slug       #=> "this-is-a-test-article"
+article1.to_param   #=> "this-is-a-test-article" 
+
+article2 = Article.create(title: "This is a test article", content: "Another article")
+article2.slug       #=> "this-is-a-test-article-1"
+
+Article.find_by_slug("this-is-a-test-article")    #=> article1
+```
 
 ## Contributing
 
